@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rest Countries Without Weather Integration</title>
+</head>
+<body>
+    
+    <script>
+        
+//step01: Create an XHR object
+//request has to be used in whole program
+var request = new XMLHttpRequest();
+//step:02: create a connection
+//true : optional
+request.open('GET', 'https://restcountries.com/v2/all', true);
+//step:03: send a request
+//push for the api to send request to server
+request.send();
+//step04 : once data successfully received from server
+//http:200
+request.onload = function(){
+    //conversion of string to array of json objects...
+    var data = JSON.parse(request.response);
+    console.log(data);
+    var board = document.createElement("div");
+    board.style.display = "flex";
+    board.style.flexWrap = "wrap";
+    board.style.justifyContent = "space-between";
+    // board.style.height = "350px";
+    // board.style.width = "100%";
+    board.style.backgroundColor = "black";
+   for(var i = 0; i < data.length; i++){
+          var myDiv = document.createElement("div");
+          myDiv.style.height = "200px";
+          myDiv.style.width = "200px";
+          myDiv.style.border = "1px solid blue";
+          myDiv.style.display = "block";
+          myDiv.style.margin = "7px 5px";
+          myDiv.style.color = "white";
+          const img = document.createElement("img");
+          img.src = data[i].flags.png;
+          img.style.height = "150px";
+          img.style.width = "200px";
+          myDiv.appendChild(img);
+          // myDiv.innerHTML = data[i].name.common;
+          const name = document.createElement("div");
+          
+          name.innerText = "Name: "+ data[i].name;
+          myDiv.appendChild(name);
+
+          const code = document.createElement("div");
+          myDiv.style.display = "block";
+          code.innerText = "Code: "+ data[i].alpha2Code;
+          myDiv.appendChild(code);
+        // //    const code = document.createElement("div");
+        //    myDiv.innerHTML = "Code: " +data[i].alpha2Code;
+          console.log("Name: "+data[i].name + "    Code: " +data[i].alpha2Code+ "    Flags: " +data[i].flags.png);
+          board.appendChild(myDiv);
+    } 
+    document.body.appendChild(board);
+    
+    
+  // let res = data.filter((data) => data.population < 100000);
+  // console.log(res.map((data) => data.name));
+}
+    </script>
+</body>
+</html>
